@@ -6,6 +6,10 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.convert.StringConvert;
+import com.lzy.okgo.model.Response;
+import com.lzy.okrx2.adapter.ObservableResponse;
 import com.rx2androidnetworking.Rx2AndroidNetworking;
 import com.rxjava2.android.samples.R;
 import com.rxjava2.android.samples.model.ApiUser;
@@ -23,6 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
@@ -88,6 +93,31 @@ public class NetworkingActivity extends AppCompatActivity {
                         Log.d(TAG, "onComplete");
                     }
                 });
+
+        OkGo.<String >get("https://fierce-cove-29863.herokuapp.com/getAnUser/1").converter(new StringConvert()).adapt(new ObservableResponse<String>()).subscribe(new Consumer<Response<String>>() {
+            @Override
+            public void accept(@NonNull Response<String> stringResponse) throws Exception {
+                stringResponse.body().toString().toString();
+            }
+        });
+
+
+
+
+//        OkGo.<ApiUser>get("https://fierce-cove-29863.herokuapp.com/getAnUser/1")
+//                .converter(new JsonConvert<ApiUser>())
+//                .adapt(new ObservableBody<ApiUser>())
+//                 .subscribe(new Consumer<ApiUser>() {
+//                     @Override
+//                     public void accept(@NonNull ApiUser apiUser) throws Exception {
+//                         Toast.makeText(NetworkingActivity.this, (apiUser.firstname + apiUser.lastname).toString(), Toast.LENGTH_SHORT).show();
+//                     }
+//                 });
+//
+
+
+
+
     }
 
 
